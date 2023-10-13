@@ -18,6 +18,6 @@ public interface CategoryService {
 	
 	List<CategoryDTO> getAllCategories();
 
-	CategoryDTO updateCategoryPartially(@Valid Map<String, Object> feilds, Integer categoryId);
+	CategoryDTO updateCategoryPartially(@Valid Map<String, Object> fields, Integer categoryId);
 
 }

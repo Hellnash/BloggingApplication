@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@SuppressWarnings("unused")
+@SuppressWarnings("All")
 public class SecurityConfiguration {
 	
 	/*@Autowired

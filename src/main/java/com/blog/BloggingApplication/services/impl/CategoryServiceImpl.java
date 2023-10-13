@@ -68,10 +68,10 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryDTO updateCategoryPartially(Map<String, Object> feilds, Integer categoryId) {
+	public CategoryDTO updateCategoryPartially(Map<String, Object> fields, Integer categoryId) {
 		
 		Category exsistingCategory = this.repository.findById(categoryId).orElseThrow(()-> new UserNotFoundException("Category", "CategoryId", categoryId));
-		feilds.forEach((key,value) -> {
+		fields.forEach((key, value) -> {
 			Field field = ReflectionUtils.findRequiredField(Category.class, key);
 			field.setAccessible(true);
 			ReflectionUtils.setField(field, exsistingCategory, value);
