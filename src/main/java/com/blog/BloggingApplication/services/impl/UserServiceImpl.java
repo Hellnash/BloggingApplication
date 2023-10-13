@@ -94,12 +94,12 @@ public UsersDTO updateUserPartially(@Valid Map<String, Object> fields, Integer u
 	
 	Users existingUser = this.repository.findById(userId).orElseThrow(()-> new UserNotFoundException("Users","Id",userId));
 	fields.forEach((key,value)->{ //run a loop in the key value pairs provided from request body
-		Field field = ReflectionUtils.findRequiredField(Users.class, key);//find fields based on key from user object
+		Field field = ReflectionUtils.findRequiredField(Users.class, key);//find field matching the key from existingUser
 		field.setAccessible(true);//Reflection utils opposes java so to avoid it we set field as accessible
-		ReflectionUtils.setField(field, existingUser, value);//set fields obtained with value in the existing object
+		ReflectionUtils.setField(field, existingUser, value);//set the obtained field with value in the existing object
 	});
 	
-	Users SavedPartialUser = this.repository.save(existingUser);
+	Users SavedPartialUser = this.repository.save(existingUser); //save the updated user in database
 	return this.mapper.map(SavedPartialUser, UsersDTO.class);
 	}
 
