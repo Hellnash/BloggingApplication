@@ -6,6 +6,8 @@ import com.blog.BloggingApplication.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @SuppressWarnings("unused")
-public class CustomUser implements UserDetailsService {
+public class CustomUserConfig implements UserDetailsService {
 
     /* The 1st way of overriding the default is creating a bean of UserDetailService
      * which overrides a method called loadUserByUsername that returns a user object
@@ -37,6 +39,11 @@ public class CustomUser implements UserDetailsService {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
 }

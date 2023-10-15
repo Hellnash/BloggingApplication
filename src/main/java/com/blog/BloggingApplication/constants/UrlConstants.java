@@ -24,7 +24,7 @@ public class UrlConstants {
 	public static final String DELETE_COMMENT = "/comment/{commentId}";
 	
 	//JWT
-	public static String TOKEN = "/generateToken";
+	public static final String GENERATE_TOKEN = "/auth/token";
 	
 	
 }
