@@ -1,6 +1,6 @@
 package com.blog.BloggingApplication.security;
 
-import com.blog.BloggingApplication.Config.CustomUserConfig;
+import com.blog.BloggingApplication.config.CustomUserConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 @Slf4j
 @SuppressWarnings("All")
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtHelper jwtHelper;

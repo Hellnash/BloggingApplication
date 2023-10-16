@@ -1,8 +1,8 @@
-package com.blog.BloggingApplication.Config;
+package com.blog.BloggingApplication.config;
 
 import com.blog.BloggingApplication.constants.UrlConstants;
-import com.blog.BloggingApplication.security.JwtAuthenticationEntryPoint;
-import com.blog.BloggingApplication.security.JwtAuthenticationFilter;
+import com.blog.BloggingApplication.security.JwtEntryPoint;
+import com.blog.BloggingApplication.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
-    JwtAuthenticationEntryPoint authenticationEntryPoint;
+    JwtEntryPoint authenticationEntryPoint;
     @Autowired
-    JwtAuthenticationFilter authenticationFilter;
+    JwtFilter authenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

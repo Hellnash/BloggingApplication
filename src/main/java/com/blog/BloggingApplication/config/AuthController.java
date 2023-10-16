@@ -1,10 +1,9 @@
-package com.blog.BloggingApplication.controllers;
+package com.blog.BloggingApplication.config;
 
-import com.blog.BloggingApplication.Config.CustomUserConfig;
 import com.blog.BloggingApplication.constants.UrlConstants;
+import com.blog.BloggingApplication.payloads.JwtRequest;
+import com.blog.BloggingApplication.payloads.JwtResponse;
 import com.blog.BloggingApplication.security.JwtHelper;
-import com.blog.BloggingApplication.security.JwtRequest;
-import com.blog.BloggingApplication.security.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

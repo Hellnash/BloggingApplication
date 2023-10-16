@@ -1,4 +1,4 @@
-package com.blog.BloggingApplication.Config;
+package com.blog.BloggingApplication.config;
 
 import com.blog.BloggingApplication.entities.Users;
 import com.blog.BloggingApplication.exceptions.UserNotFoundException;

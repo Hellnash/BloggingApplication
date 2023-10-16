@@ -1,4 +1,4 @@
-package com.blog.BloggingApplication.security;
+package com.blog.BloggingApplication.payloads;
 
 import lombok.*;
 
