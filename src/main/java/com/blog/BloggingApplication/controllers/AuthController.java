@@ -21,10 +21,8 @@ public class AuthController {
 
     @Autowired
     CustomUserConfig customUserConfig;
-
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     JwtHelper jwtHelper;
 
@@ -39,7 +37,9 @@ public class AuthController {
     }
 
     private void doAuthenticate(String email, String password) {
+        //get authentication from email and password
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email,password);
+        //set authentiation using authentication manager bean
         authenticationManager.authenticate(authentication);
     }
 }

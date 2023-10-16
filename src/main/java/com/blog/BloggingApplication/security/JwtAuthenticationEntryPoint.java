@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 @Component
 @SuppressWarnings("All")
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    //run when an unauthenticated user will try to login the API
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
                          throws IOException, ServletException {

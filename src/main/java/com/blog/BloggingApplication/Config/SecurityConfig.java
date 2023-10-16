@@ -26,11 +26,12 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable) //csrf -> csrf.disable()
             .cors(AbstractHttpConfigurer::disable) //cors -> cors.disable()
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated() //URLs
-                                               .requestMatchers(UrlConstants.GENERATE_TOKEN).permitAll()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated() //api URLs
+                                               .requestMatchers(UrlConstants.GENERATE_TOKEN).permitAll() //jwt token api
                                                .anyRequest().authenticated()) //Http method
             .exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        //the request will go through authentication filter befor accessing the APIs
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
