@@ -1,5 +1,7 @@
 package com.blog.BloggingApplication.security;
 
+import com.blog.BloggingApplication.config.CustomUserConfig;
+import com.blog.BloggingApplication.entities.Users;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     JwtHelper jwtHelper;
     @Autowired
-    UserDetailsService userDetailsService;
+    CustomUserConfig customUserConfig;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,13 +43,13 @@ public class JwtFilter extends OncePerRequestFilter {
         //got the username using jwt helper from token
         String userName = jwtHelper.getUsernameFromToken(token);
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            //got user details from database using username
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            //got users as userdetails from database using username
+            Users users = (Users) customUserConfig.loadUserByUsername(userName);
             //vaildate token user details with database user details
-            Boolean validateToken = jwtHelper.validateToken(token, userDetails);
+            Boolean validateToken = jwtHelper.validateToken(token, users);
             if(validateToken){
                 //set authentication in security context holder
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(users, null, users.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
