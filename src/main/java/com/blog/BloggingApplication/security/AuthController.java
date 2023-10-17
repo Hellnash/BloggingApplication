@@ -1,6 +1,5 @@
 package com.blog.BloggingApplication.security;
 
-import com.blog.BloggingApplication.config.CustomUserConfig;
 import com.blog.BloggingApplication.constants.UrlConstants;
 import com.blog.BloggingApplication.payloads.JwtRequest;
 import com.blog.BloggingApplication.payloads.JwtResponse;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    CustomUserConfig customUserConfig;
+    UserDetailsService userDetailsService;
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -27,9 +27,8 @@ public class AuthController {
 
     @PostMapping(UrlConstants.GENERATE_TOKEN)
     public ResponseEntity<JwtResponse> getToken(@RequestBody JwtRequest jwtRequest){
-        
         this.doAuthenticate(jwtRequest.getEmail(),jwtRequest.getPassword());
-        UserDetails userDetails = customUserConfig.loadUserByUsername(jwtRequest.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getEmail());
         String jwtToken = jwtHelper.generateToken(userDetails);
         JwtResponse response = JwtResponse.builder().token(jwtToken).userName(jwtRequest.getEmail()).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
