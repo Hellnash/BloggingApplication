@@ -32,7 +32,6 @@ public class UsersController {
 	
 	@PostMapping(UrlConstants.DEFAULT_USER)
 	public ResponseEntity<UsersDTO> createUser(@Valid @RequestBody UsersDTO userDTO){
-		
 		UsersDTO createdUser = this.userService.createUser(userDTO);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
@@ -40,7 +39,6 @@ public class UsersController {
 	@PutMapping(UrlConstants.CHANGE_USER)
 	public ResponseEntity<UsersDTO> updateUser(@Valid @RequestBody UsersDTO userDTO,
 											   @PathVariable Integer UserId){
-		
 		UsersDTO updatedUser = this.userService.updateUser(userDTO, UserId);
 		return ResponseEntity.ok(updatedUser);
 	}
@@ -48,14 +46,12 @@ public class UsersController {
 	@PatchMapping(UrlConstants.CHANGE_USER)
 	public ResponseEntity<UsersDTO> updateUserPartially(@Valid @RequestBody Map<String,Object> fields,
 														@PathVariable Integer UserId){
-
 		UsersDTO partiallyUpdatedUser = this.userService.updateUserPartially(fields,UserId);
 		return new ResponseEntity<>(partiallyUpdatedUser, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(UrlConstants.CHANGE_USER)
 	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("UserId") Integer uid){
-		
 		this.userService.deleteUser(uid);
 		return new ResponseEntity<> (new ApiResponse("Users is deleted Successfully", true),HttpStatus.OK);
 	}

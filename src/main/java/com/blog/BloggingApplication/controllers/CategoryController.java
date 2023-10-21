@@ -31,42 +31,35 @@ public class CategoryController {
 	
 	@PostMapping(UrlConstants.DEFAULT_CATEGORY)
 	public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-		
 		CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
 		return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
 	}
 	
 	@PutMapping(UrlConstants.CHANGE_CATEGORY)
-	public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO, 
-													  @PathVariable Integer CategoryId){
-		
+	public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable Integer CategoryId){
 		CategoryDTO updatedCategory = this.categoryService.updateCategory(categoryDTO, CategoryId);
 		return ResponseEntity.ok(updatedCategory);
 	}
 	
 	@PatchMapping(UrlConstants.CHANGE_CATEGORY)
-	public ResponseEntity<CategoryDTO> updateCategoryPartially(@Valid @RequestBody Map<String,Object> fields,
-															   @PathVariable Integer categoryId){
+	public ResponseEntity<CategoryDTO> updateCategoryPartially(@Valid @RequestBody Map<String,Object> fields, @PathVariable Integer categoryId){
 		CategoryDTO partiallyUpdatedCategory = this.categoryService.updateCategoryPartially(fields,categoryId);
 		return new ResponseEntity<>(partiallyUpdatedCategory,HttpStatus.CREATED); 
 	}
 	
 	public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer CategoryId){
-		
 		this.categoryService.deleteCategory(CategoryId);
 		return new ResponseEntity<> (new ApiResponse("Category is deleted ", false), HttpStatus.OK);
 	}
 	
 	@GetMapping(UrlConstants.CHANGE_CATEGORY)
 	public ResponseEntity<CategoryDTO> getACategory(@PathVariable Integer CategoryId){
-		
 		CategoryDTO requiredCategory = this.categoryService.getCategoryById(CategoryId);
 		return ResponseEntity.ok(requiredCategory);
 	}
 	
 	@GetMapping(UrlConstants.DEFAULT_CATEGORY)
 	public ResponseEntity<List<CategoryDTO>> getAllCategories(){
-		
 		List<CategoryDTO> allCategories = this.categoryService.getAllCategories();
 		return new ResponseEntity<> (allCategories, HttpStatus.OK);
 	}

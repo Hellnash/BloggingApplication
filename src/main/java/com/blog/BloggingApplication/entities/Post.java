@@ -14,6 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,34 +23,28 @@ import lombok.NoArgsConstructor;
 @Table(name = "Posts")
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
+@Builder
 public class Post {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
-	
 	@Column(name = "post_title ", nullable = false, length = 100)
 	private String tittle;
-	
 	@Column(length = 10000)
 	private String content;
-	
 	private String imageName;
-	
 	private Date addedDate;
-	
 	/*a users and a category are mapped by a list of posts and many to
 	 * one denotes that many "Posts" are done by a users and many "Posts"
 	 * is present under one "Category"
 	 */
-	
 	@ManyToOne
 	@JoinColumn(name = "category_id") //name of the column in the database
 	private Category category;
-	
 	@ManyToOne
 	private Users users;
-	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<>();
 }

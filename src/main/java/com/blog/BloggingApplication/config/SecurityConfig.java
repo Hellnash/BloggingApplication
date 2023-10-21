@@ -34,6 +34,5 @@ public class SecurityConfig {
         //the request will go through authentication filter befor accessing the APIs
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-
     }
 }

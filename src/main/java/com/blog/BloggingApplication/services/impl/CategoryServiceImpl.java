@@ -26,7 +26,6 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-
 		Category category = this.mapper.map(categoryDTO, Category.class);
 		Category createdUser = this.repository.save(category);
 		return this.mapper.map(createdUser, CategoryDTO.class);
@@ -34,7 +33,6 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryDTO updateCategory(CategoryDTO categoryDTO, Integer CategoryId) {
-
 		Category foundCategory = this.repository.findById(CategoryId).orElseThrow(()-> new UserNotFoundException("Category", "CategoryId", CategoryId));
 		foundCategory.setCategoryTittle(categoryDTO.getCategoryTittle());
 		foundCategory.setCategoryDescription(categoryDTO.getCategoryDescription());
@@ -44,14 +42,12 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void deleteCategory(Integer CategoryId) {
-
 		Category deleteCategory = this.repository.findById(CategoryId).orElseThrow(()-> new UserNotFoundException("Category", "CategoryId", CategoryId));
 		this.repository.delete(deleteCategory);
 	}
 
 	@Override
 	public CategoryDTO getCategoryById(Integer CategoryId) {
-
 		Category foundCategory = this.repository.findById(CategoryId).orElseThrow(()-> new UserNotFoundException("Category", "CategoryId", CategoryId));
 		return this.mapper.map(foundCategory, CategoryDTO.class);
 	}
@@ -63,13 +59,11 @@ public class CategoryServiceImpl implements CategoryService {
 		 * the list is converted to stream and mapped to the model
 		 * mapper to convert each category object into DTO object
 		 */
-
         return this.repository.findAll().stream().map(category -> this.mapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 	}
 
 	@Override
 	public CategoryDTO updateCategoryPartially(Map<String, Object> fields, Integer categoryId) {
-		
 		Category exsistingCategory = this.repository.findById(categoryId).orElseThrow(()-> new UserNotFoundException("Category", "CategoryId", categoryId));
 		fields.forEach((key, value) -> {
 			Field field = ReflectionUtils.findRequiredField(Category.class, key);
