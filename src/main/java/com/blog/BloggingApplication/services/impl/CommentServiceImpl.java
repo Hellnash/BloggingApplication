@@ -28,7 +28,6 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public CommentDTO createComment(CommentDTO commentDTO, Integer postId, Integer userId) {
-		
 		Post post = this.postRepo.findById(postId).orElseThrow(() -> new UserNotFoundException("Post" ,"postId", postId));
 		Users users = this.userRepo.findById(userId).orElseThrow(() -> new UserNotFoundException("Users" ,"userId", userId));
 		Comment comment = this.mapper.map(commentDTO, Comment.class);
@@ -40,7 +39,6 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public void deleteComment(Integer commentId) {
-		
 		Comment comment = this.commentRepo.findById(commentId).orElseThrow(() -> new UserNotFoundException("Comment", "commentId", commentId));
 		this.commentRepo.delete(comment);
 

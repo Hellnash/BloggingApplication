@@ -44,14 +44,12 @@ public class PostController {
 	
 	@GetMapping(UrlConstants.POST_BY_USER)
 	public ResponseEntity<List<PostDTO>> getPostsByUser(@PathVariable Integer UserId){
-		
 		List<PostDTO> postsByUser = this.postService.getPostByUser(UserId);
 		return new ResponseEntity<>(postsByUser, HttpStatus.OK);
 	}
 	
 	@GetMapping(UrlConstants.POST_BY_CATEGORY)
 	public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable Integer CategoryId){
-		
 		List<PostDTO> postsInCategory = this.postService.getPostByCategory(CategoryId);
 		return new ResponseEntity<>(postsInCategory, HttpStatus.OK);
 	}
@@ -74,21 +72,18 @@ public class PostController {
 	
 	@GetMapping(UrlConstants.SINGLE_POST)
 	public ResponseEntity<PostDTO> getPostById(@PathVariable Integer PostId){
-		
 		PostDTO postById = this.postService.getPostById(PostId);
 		return new ResponseEntity<>(postById, HttpStatus.OK);
 	}
 	
 	@PutMapping(UrlConstants.CHANGE_POST)
 	public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Integer PostId){
-		
 		PostDTO updatedPost = this.postService.updatePost(postDTO, PostId);
 		return new ResponseEntity<>(updatedPost, HttpStatus.CREATED);
 	}
 	
 	@PatchMapping(UrlConstants.CHANGE_POST)
-	public ResponseEntity<PostDTO> updatePostPartially(@Valid @RequestBody Map<String,Object> fields,
-													   @PathVariable Integer PostId){
+	public ResponseEntity<PostDTO> updatePostPartially(@Valid @RequestBody Map<String,Object> fields, @PathVariable Integer PostId){
 		PostDTO partiallyUpdatedPost = this.postService.updatePostPartially(fields,PostId);
 		return ResponseEntity.ok(partiallyUpdatedPost);
 		
@@ -96,14 +91,12 @@ public class PostController {
 	
 	@DeleteMapping(UrlConstants.CHANGE_POST)
 	public ApiResponse deletePost(@PathVariable Integer PostId){
-		
 		this.postService.deletePost(PostId);
 		return new ApiResponse("Post is successfully Deleted !! ", true);
 	}
 	
 	@GetMapping(UrlConstants.SEARCH_POST)
 	public ResponseEntity<List<PostDTO>> searchPost(@PathVariable String keyword){
-		
 		List<PostDTO> foundPosts = this.postService.searchPost(keyword);
 		return new ResponseEntity<>(foundPosts,HttpStatus.OK);
 	}

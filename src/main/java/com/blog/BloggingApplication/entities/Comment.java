@@ -8,23 +8,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "Comments")
 @Data
+@AllArgsConstructor
+@Builder
 public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer commentId;
-	
 	@Column(name = "comments")
 	private String content;
-	
 	@ManyToOne
 	private Users users;
-	
 	@ManyToOne
 	@JoinColumn(name = "post_id")
 	private Post post;

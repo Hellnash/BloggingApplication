@@ -40,7 +40,6 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public PostDTO createPost(PostDTO postDTO, Integer userId, Integer categoryId) {
-		
 		Post createdPost = this.mapper.map(postDTO, Post.class);
 		createdPost.setImageName("Default.png");
 		createdPost.setAddedDate(new Date());
@@ -55,7 +54,6 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostDTO updatePost(PostDTO postDTO, Integer postId) {
-		
 		Post post = this.postRepo.findById(postId).orElseThrow(() -> new UserNotFoundException("Post", "PostId", postId));
 		post.setTittle(postDTO.getTittle());
 		post.setContent(postDTO.getContent());
@@ -66,7 +64,6 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public void deletePost(Integer postId) {
-		
 		Post post = this.postRepo.findById(postId).orElseThrow(() -> new UserNotFoundException("Post", "PostId", postId));
 		this.postRepo.delete(post);
 
@@ -74,7 +71,6 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostResponse getAllPosts(Integer pageNumber, Integer pageSize, String sortBy, String sortDirection) {
-		
 		Sort sort;
 		if(sortDirection.equalsIgnoreCase("asc")) {
 			sort = Sort.by(sortBy).ascending(); // we will sort by value passed in sort by variable
@@ -99,14 +95,12 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostDTO getPostById(Integer postId) {
-
 		Post post = this.postRepo.findById(postId).orElseThrow(() -> new UserNotFoundException("Post", "PostId", postId));
 		return this.mapper.map(post, PostDTO.class);
 	}
 
 	@Override
 	public List<PostDTO> getPostByCategory(Integer categoryId) {
-
 		Category category = this.categoryRepo.findById(categoryId).orElseThrow(() -> new UserNotFoundException("Category", "Category Id", categoryId));
 		List<Post> Posts = this.postRepo.findByCategory(category);
 		List<PostDTO> PostDTOs;
@@ -116,7 +110,6 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDTO> getPostByUser(Integer UserId) {
-
 		Users users = this.userRepo.findById(UserId).orElseThrow(() -> new UserNotFoundException("Users", "userId", UserId));
 		List<Post> Posts = this.postRepo.findByUsers(users);
 		List<PostDTO> PostDTOs;
@@ -126,14 +119,12 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDTO> searchPost(String Keyword) {
-		
 		List<Post> posts = this.postRepo.findByTittleContaining(Keyword);
         return posts.stream().map((post) -> this.mapper.map(post, PostDTO.class)).collect(Collectors.toList());
 	}
 
 	@Override
 	public PostDTO updatePostPartially(Map<String, Object> fields, Integer postId) {
-		
 		Post exsistingPost = this.postRepo.findById(postId).orElseThrow(()-> new UserNotFoundException("Post", "PostId", postId));
 		fields.forEach((key,value) -> {//looping around key value pairs provided from request body
 			Field field = ReflectionUtils.findRequiredField(Post.class, key);//find fields from keys in the Post class

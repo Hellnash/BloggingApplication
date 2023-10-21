@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UsersDTO createUser(UsersDTO usersDTO) {
-		
 		Users users = this.DTOtoUsers(usersDTO);				//1
 		Users savedUser = this.repository.save(users);			//2
 		return this.UsersToDTO(savedUser);						//3
@@ -41,7 +40,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UsersDTO updateUser(UsersDTO usersDTO, Integer userID) {
-		
 		Users users = this.repository.findById(userID).orElseThrow(() -> new UserNotFoundException("Users","Id",userID));
 		users.setName(usersDTO.getName());
 		users.setEmail(usersDTO.getEmail());
@@ -53,20 +51,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UsersDTO getUserByID(Integer userID) {
-
 		Users users = this.repository.findById(userID).orElseThrow(() -> new UserNotFoundException("Users","Id",userID));
 		return this.UsersToDTO(users);
 	}
 
 	@Override
 	public List<UsersDTO> getAllUsers() {
-
         return this.repository.findAll().stream().map(this::UsersToDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public void deleteUser(Integer userID) {
-
 		Users users = this.repository.findById(userID).orElseThrow(() -> new UserNotFoundException("Users","Id",userID));
 		this.repository.delete(users);
 
@@ -79,7 +74,6 @@ public class UserServiceImpl implements UserService {
 	 */
 	
 	private Users DTOtoUsers(UsersDTO dto) {
-		
 		//converting UsersDTo object to Users object
         return this.mapper.map(dto, Users.class);
 		
@@ -91,14 +85,13 @@ public class UserServiceImpl implements UserService {
 
 @Override
 public UsersDTO updateUserPartially(@Valid Map<String, Object> fields, Integer userId) {
-	
 	Users existingUser = this.repository.findById(userId).orElseThrow(()-> new UserNotFoundException("Users","Id",userId));
 	fields.forEach((key,value)->{ //run a loop in the key value pairs provided from request body
 		Field field = ReflectionUtils.findRequiredField(Users.class, key);//find field matching the key from existingUser
 		field.setAccessible(true);//Reflection utils opposes java so to avoid it we set field as accessible
 		ReflectionUtils.setField(field, existingUser, value);//set the obtained field with value in the existing object
 	});
-	
+
 	Users SavedPartialUser = this.repository.save(existingUser); //save the updated user in database
 	return this.mapper.map(SavedPartialUser, UsersDTO.class);
 	}
